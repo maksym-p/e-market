@@ -16,11 +16,12 @@
 					</div>
 					<ul id="main-menu" class="main-menu">
 						<li><a href="#" title="Home page">Home</a></li>
-						<li><a href="#" title="About us">About</a></li>
-						<li><a href="#" title="Shop">Shop</a></li>
+						<li><a class="active" href="#" title="Shop">Shop</a></li>
 						<li><a href="#" title="Catalog">Catalog</a></li>
 						<li><a href="#" title="Our contacts">Contacts</a></li>
+						<li><a id="reg-btn" href="#" title="Reg">SingUp/LogIn</a></li>
 					</ul>
+
 					<div id="cart_btn" class="">
 						<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 					</div>
@@ -31,6 +32,66 @@
 					</ul>
 				</nav>
 			</header>
+
+			<div class="su-reg-main">
+
+			<section class="su-reg-form">
+
+				<span id="btns-fix1" class="btns-fix"></span>
+				<span id="btns-fix2" class="btns-fix"></span>
+
+				<a href="#btns-fix1" class="su-li-btns su-btn">Sign Up</a>
+				<a href="#btns-fix2" class="su-li-btns li-btn">Log In</a>
+
+				<article class="form-content su-form" id="qwerty">
+
+					<p>Please, fill up the registration form</p>
+
+					<form action="#" method="post">
+
+						<div class="clearfix first-line">
+							<div class="first-line-left">
+								<label for="first-name-field">First name <span class="req">*</span></label><br>
+								<input type="text" name="first-name" id="first-name-field" required autocomplete="off"><br>
+							</div>
+							<div class="first-line-right">
+								<label for="last-name-field">Last name <span class="req">*</span></label><br>
+								<input type="text" name="last-name" id="last-name-field" required autocomplete="off">
+							</div>
+						</div>
+
+						<label for="email-reg-field">E-mail <span class="req">*</span></label><br>
+						<input type="email" name="email" id="email-reg-field" required autocomplete="off">
+
+						<label for="reg-password">Set a password <span class="req">*</span></label><br>
+						<input type="password" name="pass" id="reg-password" required autocomplete="off">
+
+						<div>
+							<button type="submit" class="form-button button-block">Log In</button>
+							<button id="cancel-reg-btn" type="submit" class="form-button button-block">Cancel</button>
+						</div>
+					</form>
+				</article>
+
+				<article class="form-content li-form">
+
+					<p>Welcome Back!</p>
+
+					<form action="#" method="post">
+
+						<label for="email-log-field">E-mail <span class="req">*</span></label><br>
+						<input type="email" name="email" id="email-log-field" required autocomplete="off">
+
+						<label for="log-password">Set a password <span class="req">*</span></label><br>
+						<input type="password" name="pass" id="log-password" required autocomplete="off">
+						<div>
+							<button type="submit" class="form-button button-block">Log In</button>
+							<button id="cancel-reg-btn" type="submit" class="form-button button-block">Cancel</button>
+						</div>
+					</form>
+				</article>
+			</section>
+			</div>
 
 			<main>
 				<ul id="goods_list" class="container" value="112">
@@ -214,27 +275,58 @@
 
 			    var menu_navigation = $('#main-menu'),
 			        cart_trigger = $('#cart_btn'),
-			        hamburger_icon = $('#mobile-hamburger'),
+			        hamburger_btn = $('#mobile-hamburger'),
+							hamburger_icon = $('#mobile-hamburger i'),
 			        cart = $('#menu-cart');
 
 					cart_trigger.on('click', function () {
 						  if (cart.hasClass('menu_cart_show')) {
+									cart_trigger.removeClass('active');
 						      cart.removeClass('menu_cart_show');
 									$('body').removeClass('overlay');
 						  } else {
+								menu_navigation.removeClass('main_menu_open');
+								hamburger_btn.removeClass('mobile_hamburger_open');
+								hamburger_icon.addClass('fa-bars');
+								hamburger_icon.removeClass('fa-chevron-left');
+									cart_trigger.addClass('active');
 						      cart.addClass('menu_cart_show');
-									$('body').addClass('overlay');
+									$('body').addClass('overlay overflow');
 						  }
 					});
 
-					hamburger_icon.on('click', function () {
+					hamburger_btn.on('click', function () {
 							if (menu_navigation.hasClass('main_menu_open')) {
 								menu_navigation.removeClass('main_menu_open');
-						 		$('body').removeClass('overlay');
+								hamburger_btn.removeClass('mobile_hamburger_open');
+								hamburger_icon.addClass('fa-bars');
+								hamburger_icon.removeClass('fa-chevron-left');
+						 		$('body').removeClass('overlay overflow');
 							} else {
+								cart.removeClass('menu_cart_show');
+								cart_trigger.removeClass('active');
+								hamburger_btn.addClass('mobile_hamburger_open');
 								menu_navigation.addClass('main_menu_open');
-								$('body').addClass('overlay');
+								$('body').addClass('overlay overflow');
+								hamburger_icon.removeClass('fa-bars');
+								hamburger_icon.addClass('fa-chevron-left');
 							};
+					});
+
+					$('#reg-btn').on('click', function () {
+							$('.su-reg-main').toggleClass('su-reg-main-open');
+							if (menu_navigation.hasClass('main_menu_open')) {
+								menu_navigation.removeClass('main_menu_open');
+								hamburger_btn.removeClass('mobile_hamburger_open');
+								hamburger_icon.addClass('fa-bars');
+								hamburger_icon.removeClass('fa-chevron-left');
+							$('body').removeClass('overlay overflow');
+							}
+					});
+
+					$('#cancel-reg-btn').on('click', function () {
+							$('.su-reg-main').removeClass('su-reg-main-open');
+							$('body').removeClass('overlay overflow');
 					});
 			});
 
